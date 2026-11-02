@@ -62,6 +62,11 @@
       </div>
     </section>
 
+    <div class="cinta" aria-hidden="true"><div class="cinta-pista">
+      <span lang="es">🎙️ te escucha · 👀 aparece sola · 🎤 karaoke con traducción · 😴 duerme con gorrito · 🌤️ clima · 📺 anime de hoy · 🧠 te recuerda · 🔒 privada · 💸 gratis · 🎙️ te escucha · 👀 aparece sola · 🎤 karaoke con traducción · 😴 duerme con gorrito · 🌤️ clima · 📺 anime de hoy · 🧠 te recuerda · 🔒 privada · 💸 gratis ·</span>
+      <span lang="en">🎙️ listens · 👀 pops up on her own · 🎤 karaoke with translation · 😴 sleeps in a nightcap · 🌤️ weather · 📺 today's anime · 🧠 remembers you · 🔒 private · 💸 free · 🎙️ listens · 👀 pops up on her own · 🎤 karaoke with translation · 😴 sleeps in a nightcap · 🌤️ weather · 📺 today's anime · 🧠 remembers you · 🔒 private · 💸 free ·</span>
+    </div></div>
+
     <!-- ============ LAS DOS NAVIs ============ -->
     <section id="navis" data-navi="navis">
       <h2 class="titulo-terminal" data-escribir><span lang="es">&gt; dos NAVIs, una personalidad</span><span lang="en">&gt; two NAVIs, one personality</span></h2>
@@ -92,6 +97,36 @@
       </div>
     </section>
 
+    <!-- ============ TELE DE MENTIRA ============ -->
+    <section id="demo" data-navi="demo">
+      <h2 class="titulo-terminal" data-escribir><span lang="es">&gt; así se ve en tu tele</span><span lang="en">&gt; this is how it looks on your TV</span></h2>
+      <div class="tele-marco">
+        <div class="tele">
+          <div class="tele-pantalla" id="telePantalla">
+            <div class="escena" aria-hidden="true"><div class="luna"></div><div class="estrellas"></div><div class="cerros"></div></div>
+            <canvas id="teleNavi" class="tele-navi"></canvas>
+            <div class="tele-globo" id="teleGlobo"></div>
+            <div class="tele-karaoke" id="teleKaraoke">
+              <canvas id="teleBaile" class="tele-baile"></canvas>
+              <div class="tele-letra"><b id="kLinea">♪</b><small id="kTrad"></small><i id="kSig"></i></div>
+            </div>
+            <div class="tele-widgets" id="teleWidgets">
+              <div class="tw tw-clima">🌤️ 28° · <span lang="es">Despejado</span><span lang="en">Clear</span></div>
+              <div class="tw tw-reloj"><span id="teleHora">00:00</span><small lang="es">tu salvapantallas</small><small lang="en">your screensaver</small></div>
+              <canvas id="teleDormida" class="tele-dormida"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="tele-pie"></div>
+      </div>
+      <ol class="modos" id="modos">
+        <li data-modo="0"><span lang="es">👀 Aparece sola a comentar</span><span lang="en">👀 Pops up to comment</span></li>
+        <li data-modo="1"><span lang="es">🎤 Karaoke con traducción</span><span lang="en">🎤 Karaoke with translation</span></li>
+        <li data-modo="2"><span lang="es">😴 Salvapantallas con gorrito</span><span lang="en">😴 Nightcap screensaver</span></li>
+      </ol>
+      <p class="pequeno"><span lang="es">(Es una simulación hecha en la web: la canción es inventada 😉)</span><span lang="en">(A web simulation: the song is made up 😉)</span></p>
+    </section>
+
     <!-- ============ GALERÍA ============ -->
     <section id="galeria" data-navi="galeria">
       <h2 class="titulo-terminal" data-escribir><span lang="es">&gt; NAVI en acción</span><span lang="en">&gt; NAVI in action</span></h2>
@@ -99,6 +134,10 @@
         <figure class="cristal grande-fig" data-navi-foto="aparece">
           <img src="img/navi-aparece.gif" loading="lazy" alt="NAVI entra flotando y comenta un atardecer">
           <figcaption><span lang="es">Aparece sola a comentar lo que ves 🌙</span><span lang="en">Pops up on her own to comment 🌙</span></figcaption>
+        </figure>
+        <figure class="cristal grande-fig" data-navi-foto="paseo">
+          <video src="img/navi-paseo.mp4" poster="img/navi-paseo.jpg" autoplay muted loop playsinline></video>
+          <figcaption><span lang="es">Se enciende como tele vieja y se pasea por la pantalla 🧸</span><span lang="en">Turns on like an old TV and strolls around 🧸</span></figcaption>
         </figure>
         <figure class="cristal" data-navi-foto="cerca">
           <img src="img/navi-cerca.gif" loading="lazy" alt="NAVI con ojos de corazón">
@@ -109,7 +148,7 @@
           <figcaption><span lang="es">Escuchándote por el micro del control</span><span lang="en">Listening through the remote's mic</span></figcaption>
         </figure>
         <figure class="cristal grande-fig" data-navi-foto="salvapantallas">
-          <img src="img/salvapantallas.jpg" loading="lazy" alt="Salvapantallas con widgets">
+          <video src="img/salvapantallas.mp4" poster="img/salvapantallas-poster.jpg" autoplay muted loop playsinline></video>
           <figcaption><span lang="es">El salvapantallas: clima, anime, gif, frase, quién sale en la imagen…</span><span lang="en">The screensaver: weather, anime, gif, quote, who's in the picture…</span></figcaption>
         </figure>
         <figure class="cristal" data-navi-foto="durmiendo">
@@ -266,6 +305,7 @@ cd navi
     <p class="pequeno"><span lang="es">«En la actualidad. En este momento.»</span><span lang="en">“Present day. Present time.”</span></p>
   </footer>
 
+  <script src="js/fondo.js"></script>
   <script src="js/carita.js"></script>
   <script src="js/web.js"></script>
 </body>

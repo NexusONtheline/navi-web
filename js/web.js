@@ -146,6 +146,7 @@ const porSeccion = {
   creditos: { lado: "izquierda", r: "enamorada", es: "Me hicieron NexusONtheline y Claude 💗", en: "I was made by NexusONtheline and Claude 💗" },
 };
 const porFoto = {
+  paseo: { es: "¡Ahí me ves paseando con mi osito! 🧸", en: "That's me strolling with my teddy! 🧸" },
   aparece: { es: "Ahí salgo sola, flotando, a comentar un atardecer 🌙", en: "That's me popping up to comment on a sunset 🌙" },
   cerca: { es: "Ojos de corazón: mi cara favorita 💗", en: "Heart eyes: my favorite face 💗" },
   escucha: { es: "Cuando me pongo rosa, ¡te estoy escuchando!", en: "When I turn pink, I'm listening!" },
@@ -286,5 +287,136 @@ $("#formulario").addEventListener("submit", (e) => {
 linea(T({ es: "navi> ¡Hola! Escribe algo y presiona Enter. («ayuda» para ideas)", en: "navi> Hi! Type something and press Enter. (“help” for ideas)" }), "navi");
 
 // ------------------------------------------------------------ Reddit (se activa cuando haya enlace)
-const REDDIT = "";  // pon aquí el enlace de tu perfil o post de Reddit
+const REDDIT = "https://www.reddit.com/user/Expensive_Cherry9998/";
 if (REDDIT) { const a = $("#reddit"); a.href = REDDIT; a.hidden = false; }
+
+// ============================================================ dinamismo
+// Todo entra con animación al bajar (con un pequeño escalonado)
+(() => {
+  const grupos = [".dos > *", ".galeria > *", ".faq > *", ".ruta > *", ".sellos > *", ".pasos > *", ".modos > *"];
+  grupos.forEach((g) => $$(g).forEach((el, i) => { el.classList.add("revelar"); el.style.setProperty("--i", i % 6); }));
+  $$(".lema, .intro, .consola, .tele-marco, .titulo-terminal, .pestanas").forEach((el) => el.classList.add("revelar"));
+  const obs = new IntersectionObserver((es) => es.forEach((e) => {
+    if (!e.isIntersecting) return;
+    e.target.classList.add("visible");
+    obs.unobserve(e.target);
+    if (e.target.matches("[data-escribir]")) escribirTitulo(e.target);
+  }), { threshold: 0.15 });
+  $$(".revelar").forEach((el) => obs.observe(el));
+})();
+
+// Los títulos se escriben letra por letra cuando aparecen
+function escribirTitulo(h) {
+  if (reducir) return;
+  $$("span[lang]", h).forEach((sp) => {
+    const txt = sp.textContent;
+    sp.textContent = "";
+    let i = 0;
+    const paso = () => { sp.textContent = txt.slice(0, ++i); if (i < txt.length) setTimeout(paso, 38); };
+    setTimeout(paso, 250);
+  });
+}
+
+// Tarjetas y fotos que se inclinan en 3D siguiendo el ratón
+if (!reducir && matchMedia("(pointer: fine)").matches) {
+  $$(".tarjeta, .galeria figure, .tele-marco").forEach((el) => {
+    el.classList.add("inclina");
+    el.addEventListener("pointermove", (e) => {
+      const r = el.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5;
+      const fuerza = el.classList.contains("tele-marco") ? 5 : 8;
+      el.style.transform = `perspective(900px) rotateY(${x * fuerza}deg) rotateX(${-y * fuerza}deg) translateY(-3px)`;
+    });
+    el.addEventListener("pointerleave", () => (el.style.transform = ""));
+  });
+}
+
+// ------------------------------------------------------------ la tele de mentira
+(() => {
+  const pantalla = $("#telePantalla");
+  if (!pantalla) return;
+  const navi = new Carita($("#teleNavi"));
+  const baile = new Carita($("#teleBaile"));
+  const dormida = new Carita($("#teleDormida"));
+  navi.apagada = true;
+  baile.bailando = true; baile.reaccion = "feliz";
+  dormida.estado = "dormida"; dormida.gorro = "#e0457a";
+  const elNavi = $("#teleNavi"), globo = $("#teleGlobo"), karaoke = $("#teleKaraoke"), widgets = $("#teleWidgets");
+  const espera = (ms) => new Promise((r) => setTimeout(r, ms));
+  const modos = $$("#modos li");
+  const marcar = (i) => modos.forEach((m, k) => m.classList.toggle("activo", k === i));
+  // hora de verdad en el reloj del salvapantallas
+  const reloj = () => { const d = new Date(); $("#teleHora").textContent = `${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`; };
+  reloj(); setInterval(reloj, 15000);
+
+  // posiciones en % del ancho/alto de la pantalla (la carita mide 13 % de ancho)
+  function moverNavi(xp, yp) {
+    const W = pantalla.clientWidth, H = pantalla.clientHeight;
+    elNavi.style.transform = `translate(${(xp / 100) * W}px, ${(yp / 100) * H}px)`;
+    globo.style.transform = `translate(${Math.min(55, xp + 2) / 100 * W}px, ${Math.max(2, yp - 16) / 100 * H}px)`;
+  }
+  // la canción inventada (con «traducción»)
+  const letra = [
+    ["Prendo la tele y estás tú ahí", "I turn on the TV and you're right there"],
+    ["una carita que brilla por mí", "a little face that glows for me"],
+    ["bailo en la esquina, te canto bajito", "I dance in the corner, I sing to you softly"],
+    ["con mi gorrito y mi corazoncito ♪", "with my nightcap and my little heart ♪"],
+    ["si te vas a dormir, me duermo contigo", "if you go to sleep, I'll sleep with you"],
+  ];
+  const comentarios = [
+    { es: "¡Qué lindo atardecer! ¿Lo viste? 🌙", en: "What a pretty sunset! Did you see it? 🌙", r: "enamorada" },
+    { es: "Mira esas estrellitas… ✨", en: "Look at those little stars… ✨", r: "sorprendida" },
+    { es: "Me encanta ver la tele contigo 💜", en: "I love watching TV with you 💜", r: "feliz" },
+  ];
+  let vuelta = 0;
+
+  async function bucle() {
+    while (true) {
+      // 1 · aparece sola, se enciende como tele vieja y se pasea
+      marcar(0);
+      pantalla.classList.remove("dormida");
+      elNavi.style.transition = "none";
+      moverNavi(-16, 66);
+      await espera(60);
+      elNavi.style.transition = "";
+      const c = comentarios[vuelta++ % comentarios.length];
+      navi.reaccion = c.r; navi.estado = "reposo"; navi.apagada = false; navi.encender();
+      moverNavi(6, 64); await espera(1400);
+      globo.textContent = T(c); globo.classList.add("visible"); navi.estado = "hablando";
+      moverNavi(30, 18); await espera(1700);
+      moverNavi(58, 60); await espera(1700);
+      navi.estado = "reposo"; globo.classList.remove("visible");
+      moverNavi(80, 62); await espera(1500);
+      await new Promise((r) => navi.apagar(r));
+      await espera(500);
+
+      // 2 · karaoke con NAVI bailando
+      marcar(1);
+      karaoke.classList.add("visible");
+      for (let i = 0; i < letra.length; i++) {
+        const b = $("#kLinea");
+        b.style.opacity = 0.3; b.style.transform = "translateY(4px)";
+        b.textContent = letra[i][0];
+        $("#kTrad").textContent = letra[i][1];
+        $("#kSig").textContent = letra[i + 1] ? letra[i + 1][0] : "♪";
+        await espera(60); b.style.opacity = 1; b.style.transform = "none";
+        await espera(2100);
+      }
+      karaoke.classList.remove("visible");
+      await espera(800);
+
+      // 3 · salvapantallas: NAVI dormida con gorrito
+      marcar(2);
+      dormida.gorro = azar(["#e0457a", "#7c5cff", "#3fa7d6", "#4caf7a", "#f2a541"]);
+      pantalla.classList.add("dormida");
+      widgets.classList.add("visible");
+      await espera(5200);
+      widgets.classList.remove("visible");
+      await espera(900);
+    }
+  }
+  // empieza cuando la tele se ve en pantalla
+  const obs = new IntersectionObserver((es) => { if (es[0].isIntersecting) { obs.disconnect(); bucle(); } }, { threshold: 0.3 });
+  obs.observe(pantalla);
+  porSeccion.demo = { lado: "izquierda", r: "feliz", es: "¡Esta es mi vida en la tele! Mira lo que hago 📺", en: "This is my life on the TV! Look what I do 📺" };
+})();

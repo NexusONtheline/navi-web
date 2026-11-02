@@ -25,6 +25,9 @@ class Carita {
     this.proximoParpadeo = performance.now() + 2500;
     this.mano = null;                // {x, y} en coordenadas del lienzo lógico: hacia dónde estira la manita
     this.manoProgreso = 0;
+    this.bailando = false;
+    this.tele = null;                // animación de tele vieja: {inicio, encender, fin}
+    this.apagada = false;
     this._redimensionar();
     new ResizeObserver(() => this._redimensionar()).observe(lienzo);
     requestAnimationFrame((t) => this._cuadro(t));
@@ -47,6 +50,12 @@ class Carita {
     this.objetivo.y = Math.max(-1, Math.min(1, dy));
   }
 
+  /** Se enciende como una tele vieja: puntito → línea → pantalla. */
+  encender() { this.apagada = false; this.tele = { inicio: performance.now(), encender: true }; }
+
+  /** Se apaga como una tele vieja y luego llama a fin(). */
+  apagar(fin) { this.tele = { inicio: performance.now(), encender: false, fin }; }
+
   /** Estira la manita hacia un punto de la pantalla (null = guardarla). */
   estirarMano(xPantalla, yPantalla) {
     if (xPantalla == null) { this.mano = null; return; }
@@ -64,6 +73,27 @@ class Carita {
     c.translate((w - ANCHO * e) / 2, (h - ALTO * e) / 2);
     c.scale(e, e);
     c.translate(0, ARRIBA);
+    if (this.apagada) { c.restore(); return requestAnimationFrame((x) => this._cuadro(x)); }
+
+    let destello = 0;
+    if (this.tele) {
+      const p = Math.min(1, (ahora - this.tele.inicio) / 480);
+      const f = this.tele.encender ? p : 1 - p;
+      const sx = f < 0.35 ? Math.max(0.02, f / 0.35) : 1;
+      const sy = f < 0.35 ? 0.03 : 0.03 + 0.97 * ((f - 0.35) / 0.65);
+      c.translate(ANCHO / 2, PY + PH / 2); c.scale(sx, sy); c.translate(-ANCHO / 2, -(PY + PH / 2));
+      destello = f < 0.5 ? 1 - f * 2 : 0;
+      if (p >= 1) {
+        const fin = this.tele.fin, enc = this.tele.encender;
+        this.tele = null;
+        if (!enc) { this.apagada = true; if (fin) setTimeout(fin, 0); }
+      }
+    }
+    if (this.bailando) {
+      const beat = t * 2;
+      c.translate(0, -Math.abs(Math.sin(Math.PI * beat)) * 7);
+      c.translate(ANCHO / 2, PY + PH); c.rotate(Math.sin(Math.PI * beat) * 0.16); c.translate(-ANCHO / 2, -(PY + PH));
+    }
 
     const dormida = this.estado === "dormida";
     c.translate(0, dormida ? Math.sin(t * 0.8) * 1.5 : Math.sin(t * 1.6) * 2.5);
@@ -115,6 +145,11 @@ class Carita {
 
     if (this.gorro) this._gorrito(c, t);
     if (dormida) this._zetas(c, t, color);
+    if (this.bailando) this._notitas(c, t, color);
+    if (destello > 0) {
+      c.fillStyle = `rgba(255,255,255,${destello})`;
+      this._redondo(c, PX - 3, PY - 3, PW + 6, PH + 6, 17); c.fill();
+    }
     c.restore();
     requestAnimationFrame((x) => this._cuadro(x));
   }
@@ -198,6 +233,17 @@ class Carita {
     const a = 1.5 + 1.2 * Math.sin(t * 0.8);
     c.fillStyle = rgba(color, 0.7);
     c.beginPath(); c.ellipse(60, OJOS_Y + 20, 3, a, 0, 0, Math.PI * 2); c.fill();
+  }
+
+  _notitas(c, t, color) {
+    const notas = ["♪", "♫", "♪"];
+    for (let i = 0; i < 3; i++) {
+      const f = (t * 0.45 + i / 3) % 1;
+      c.font = `${11 + f * 7}px sans-serif`;
+      c.fillStyle = rgba(i === 1 ? ROSA : color, (1 - f) * 0.95);
+      const x = i % 2 === 0 ? PX - 12 - f * 10 : PX + PW + 2 + f * 10;
+      c.fillText(notas[i], x, PY + 30 - f * 40);
+    }
   }
 
   _zetas(c, t, color) {
