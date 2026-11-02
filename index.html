@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="es" data-lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NAVI — una carita que vive en tu tele y en tu PC</title>
+  <meta name="description" content="NAVI: asistente gratis y de código abierto para Linux y Google TV. Una carita que te habla, te escucha, aparece sola a comentar lo que ves y canta contigo.">
+  <meta property="og:title" content="NAVI — una carita que vive en tu tele y en tu PC">
+  <meta property="og:description" content="Asistente gratis y de código abierto para Linux y Google TV, con personalidad propia.">
+  <meta property="og:image" content="img/navi-cerca.gif">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='6' y='10' width='52' height='42' rx='10' fill='%231e1b2b'/%3E%3Crect x='10' y='14' width='44' height='34' rx='8' fill='%2305070d'/%3E%3Crect x='22' y='24' width='6' height='9' rx='2' fill='%239eccff'/%3E%3Crect x='36' y='24' width='6' height='9' rx='2' fill='%239eccff'/%3E%3Cpath d='M26 39q6 4 12 0' stroke='%239eccff' stroke-width='2.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800&family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/estilo.css">
+</head>
+<body>
+  <div class="crt" aria-hidden="true"></div>
+
+  <!-- NAVI guía: se pasea, explica, estira la manita -->
+  <div id="guia" class="guia" aria-live="polite">
+    <div class="globo" id="globo"></div>
+    <canvas id="guiaCarita" class="guia-carita" title="NAVI"></canvas>
+  </div>
+
+  <header class="barra">
+    <a class="logo" href="#inicio"><span class="cursor-logo">&gt;</span> NAVI</a>
+    <nav>
+      <a href="#navis"><span lang="es">Las NAVIs</span><span lang="en">The NAVIs</span></a>
+      <a href="#galeria"><span lang="es">Galería</span><span lang="en">Gallery</span></a>
+      <a href="#instalar"><span lang="es">Instalar</span><span lang="en">Install</span></a>
+      <a href="#preguntas"><span lang="es">Preguntas</span><span lang="en">FAQ</span></a>
+      <a href="#terminal"><span lang="es">Háblale</span><span lang="en">Talk</span></a>
+    </nav>
+    <button class="idioma" id="idioma" aria-label="Cambiar idioma / Change language">EN</button>
+  </header>
+
+  <main>
+    <!-- ============ INICIO ============ -->
+    <section id="inicio" class="inicio" data-navi="inicio">
+      <div class="inicio-texto">
+        <p class="terminal-linea"><span class="prompt">navi@nexo:~$</span> <span id="escribiendo"></span><span class="cursor">▌</span></p>
+        <h1>NAVI</h1>
+        <p class="lema">
+          <span lang="es">Una carita que vive en tu <b>tele</b> y en tu <b>PC</b>. Te escucha, te responde, aparece sola a comentar lo que ves… y hasta canta contigo.</span>
+          <span lang="en">A little face that lives in your <b>TV</b> and your <b>PC</b>. It listens, talks back, pops up on its own to comment on what you're watching… and even sings along.</span>
+        </p>
+        <ul class="sellos">
+          <li><span lang="es">💸 100 % gratis</span><span lang="en">💸 100% free</span></li>
+          <li><span lang="es">🔓 Código abierto</span><span lang="en">🔓 Open source</span></li>
+          <li><span lang="es">🔒 Tu privacidad primero</span><span lang="en">🔒 Privacy first</span></li>
+          <li><span lang="es">🇪🇸 En español</span><span lang="en">🇪🇸 Speaks Spanish</span></li>
+        </ul>
+        <div class="botones">
+          <a class="boton primario" href="#navis"><span lang="es">Conócela</span><span lang="en">Meet her</span> ↓</a>
+          <a class="boton" href="https://github.com/NexusONtheline/navi-tv" target="_blank" rel="noopener">⭐ GitHub</a>
+        </div>
+      </div>
+      <div class="inicio-carita">
+        <canvas id="grande" class="carita-grande" title="NAVI"></canvas>
+        <p class="pista"><span lang="es">psst… hazle clic 👆</span><span lang="en">psst… click her 👆</span></p>
+      </div>
+    </section>
+
+    <!-- ============ LAS DOS NAVIs ============ -->
+    <section id="navis" data-navi="navis">
+      <h2 class="titulo-terminal" data-escribir><span lang="es">&gt; dos NAVIs, una personalidad</span><span lang="en">&gt; two NAVIs, one personality</span></h2>
+      <div class="dos">
+        <article class="cristal tarjeta">
+          <div class="etiqueta">📺 NAVI TV · Google TV / Android TV</div>
+          <h3><span lang="es">Reemplaza al asistente de Google</span><span lang="en">Replaces the Google Assistant</span></h3>
+          <ul class="lista">
+            <li><span lang="es"><b>El botón del micro es suyo:</b> aprietas, sale la carita en la esquina, te escucha y te responde con voz.</span><span lang="en"><b>The mic button is hers:</b> press it, the little face pops up in the corner, listens and answers out loud.</span></li>
+            <li><span lang="es"><b>Aparece sola:</b> mira lo que ves y, si algo le llama la atención, entra flotando a comentarlo, con su cara y un emoji.</span><span lang="en"><b>Shows up on her own:</b> she looks at what you're watching and, if something catches her eye, floats in to comment with a face and an emoji.</span></li>
+            <li><span lang="es"><b>Modo karaoke:</b> cuando suena una canción, la letra sincronizada abajo (con traducción) y NAVI bailando.</span><span lang="en"><b>Karaoke mode:</b> when a song plays, synced lyrics at the bottom (translated) while NAVI dances.</span></li>
+            <li><span lang="es"><b>Salvapantallas con widgets:</b> ilustraciones random, clima, anime, gifs, frases… y NAVI durmiendo con gorrito.</span><span lang="en"><b>Widget screensaver:</b> random illustrations, weather, anime, gifs, quotes… and NAVI sleeping in a nightcap.</span></li>
+            <li><span lang="es"><b>Abre apps, busca en YouTube, cambia el volumen</b> y recuerda lo que le cuentas.</span><span lang="en"><b>Opens apps, searches YouTube, changes the volume</b> and remembers what you tell her.</span></li>
+          </ul>
+          <a class="boton" href="https://github.com/NexusONtheline/navi-tv" target="_blank" rel="noopener"><span lang="es">Ver NAVI TV</span><span lang="en">See NAVI TV</span> →</a>
+        </article>
+        <article class="cristal tarjeta">
+          <div class="etiqueta">💻 NAVI · Linux</div>
+          <h3><span lang="es">Tu asistente de escritorio, estilo Lain</span><span lang="en">Your desktop assistant, Lain style</span></h3>
+          <ul class="lista">
+            <li><span lang="es"><b>«NAVI, actívate»:</b> la llamas con la voz, te escucha y te habla, sin internet para la voz.</span><span lang="en"><b>“NAVI, actívate”:</b> call her with your voice; listening and speaking work offline.</span></li>
+            <li><span lang="es"><b>Mascota de escritorio:</b> un PC beige de los 90 en una esquina que te sigue con la mirada. Pínchale un ojo, a ver qué pasa.</span><span lang="en"><b>Desktop pet:</b> a beige 90s PC in the corner that follows you with its eyes. Poke its eye and see.</span></li>
+            <li><span lang="es"><b>Modo techo y holograma:</b> con un mini proyector, música en el techo y NAVI flotando de cuerpo entero.</span><span lang="en"><b>Ceiling & hologram mode:</b> with a mini projector, music on the ceiling and full-body NAVI floating.</span></li>
+            <li><span lang="es"><b>Hace cosas por ti:</b> música, recordatorios, noticias, ventanas, brillo, instalar programas (siempre preguntando).</span><span lang="en"><b>Does things for you:</b> music, reminders, news, windows, brightness, installing apps (always asking first).</span></li>
+          </ul>
+          <a class="boton" href="https://github.com/NexusONtheline/navi" target="_blank" rel="noopener"><span lang="es">Ver NAVI</span><span lang="en">See NAVI</span> →</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ GALERÍA ============ -->
+    <section id="galeria" data-navi="galeria">
+      <h2 class="titulo-terminal" data-escribir><span lang="es">&gt; NAVI en acción</span><span lang="en">&gt; NAVI in action</span></h2>
+      <div class="galeria">
+        <figure class="cristal grande-fig" data-navi-foto="aparece">
+          <img src="img/navi-aparece.gif" loading="lazy" alt="NAVI entra flotando y comenta un atardecer">
+          <figcaption><span lang="es">Aparece sola a comentar lo que ves 🌙</span><span lang="en">Pops up on her own to comment 🌙</span></figcaption>
+        </figure>
+        <figure class="cristal" data-navi-foto="cerca">
+          <img src="img/navi-cerca.gif" loading="lazy" alt="NAVI con ojos de corazón">
+          <figcaption><span lang="es">Ojos de corazón y su objetito</span><span lang="en">Heart eyes and her little item</span></figcaption>
+        </figure>
+        <figure class="cristal" data-navi-foto="escucha">
+          <img src="img/navi-escucha.png" loading="lazy" alt="NAVI escuchando">
+          <figcaption><span lang="es">Escuchándote por el micro del control</span><span lang="en">Listening through the remote's mic</span></figcaption>
+        </figure>
+        <figure class="cristal grande-fig" data-navi-foto="salvapantallas">
+          <img src="img/salvapantallas.jpg" loading="lazy" alt="Salvapantallas con widgets">
+          <figcaption><span lang="es">El salvapantallas: clima, anime, gif, frase, quién sale en la imagen…</span><span lang="en">The screensaver: weather, anime, gif, quote, who's in the picture…</span></figcaption>
+        </figure>
+        <figure class="cristal" data-navi-foto="durmiendo">
+          <img src="img/navi-durmiendo.png" loading="lazy" alt="NAVI durmiendo con gorrito">
+          <figcaption><span lang="es">Durmiendo con gorrito 😴</span><span lang="en">Sleeping in a nightcap 😴</span></figcaption>
+        </figure>
+        <figure class="cristal" data-navi-foto="mascota">
+          <img src="img/mascota.gif" loading="lazy" alt="La mascota de escritorio reaccionando">
+          <figcaption><span lang="es">La mascota de la laptop</span><span lang="en">The laptop pet</span></figcaption>
+        </figure>
+        <figure class="cristal" data-navi-foto="ojo">
+          <img src="img/mascota-par.png" loading="lazy" alt="«¡Oye! Ese es mi ojo»">
+          <figcaption><span lang="es">«¡Oye! Ese es mi ojo.»</span><span lang="en">“Hey! That's my eye.”</span></figcaption>
+        </figure>
+        <figure class="cristal" data-navi-foto="holograma">
+          <img src="img/holograma.gif" loading="lazy" alt="Holograma de NAVI">
+          <figcaption><span lang="es">El holograma, para el proyector</span><span lang="en">The hologram, for the projector</span></figcaption>
+        </figure>
+      </div>
+      <p class="nota"><span lang="es">Las ilustraciones de las capturas son de sus artistas (vía Safebooru).</span><span lang="en">Illustrations in the screenshots belong to their artists (via Safebooru).</span></p>
+    </section>
+
+    <!-- ============ INSTALAR ============ -->
+    <section id="instalar" data-navi="instalar">
+      <h2 class="titulo-terminal" data-escribir><span lang="es">&gt; instálala</span><span lang="en">&gt; install her</span></h2>
+      <p class="intro">
+        <span lang="es">Necesitas una <b>clave gratis de Gemini</b> (<a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">aistudio.google.com/apikey</a>). Cada persona usa la suya: no pagas nada y nadie más ve lo que hablas.</span>
+        <span lang="en">You need a <b>free Gemini key</b> (<a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">aistudio.google.com/apikey</a>). Everyone uses their own: you pay nothing and nobody else sees your chats.</span>
+      </p>
+      <div class="pestanas" role="tablist">
+        <button class="pestana activa" data-pestana="tv" role="tab">📺 <span lang="es">En la tele</span><span lang="en">On the TV</span></button>
+        <button class="pestana" data-pestana="pc" role="tab">💻 <span lang="es">En Linux</span><span lang="en">On Linux</span></button>
+      </div>
+      <div class="cristal panel activo" data-panel="tv">
+        <ol class="pasos">
+          <li><span lang="es">En la tele: <b>Ajustes → Sistema → Opciones para desarrolladores → Depuración inalámbrica</b> (actívala y anota la IP).</span><span lang="en">On the TV: <b>Settings → System → Developer options → Wireless debugging</b> (turn it on and note the IP).</span></li>
+          <li><span lang="es">En tu PC con <code>adb</code>:</span><span lang="en">On your PC with <code>adb</code>:</span>
+            <div class="codigo"><pre>git clone https://github.com/NexusONtheline/navi-tv
+cd navi-tv
+./scripts/instalar-en-tv 192.168.1.50</pre><button class="copiar" aria-label="Copiar">⧉</button></div>
+          </li>
+          <li><span lang="es">Te pide tu clave, tu nombre y tu ciudad. ¡Listo! Aprieta el micro del control.</span><span lang="en">It asks for your key, name and city. Done! Press the remote's mic button.</span></li>
+        </ol>
+        <p class="pequeno"><span lang="es">¿Quieres volver al asistente de Google? <code>./scripts/instalar-en-tv IP --quitar</code></span><span lang="en">Want Google Assistant back? <code>./scripts/instalar-en-tv IP --quitar</code></span></p>
+      </div>
+      <div class="cristal panel" data-panel="pc">
+        <ol class="pasos">
+          <li><span lang="es">En Linux Mint / Ubuntu / Debian o Arch:</span><span lang="en">On Linux Mint / Ubuntu / Debian or Arch:</span>
+            <div class="codigo"><pre>git clone https://github.com/NexusONtheline/navi.git
+cd navi
+./instalar.sh</pre><button class="copiar" aria-label="Copiar">⧉</button></div>
+          </li>
+          <li><span lang="es">El instalador te pide la clave y baja la voz y los oídos de NAVI (~650 MB, solo la primera vez).</span><span lang="en">The installer asks for your key and downloads NAVI's voice and ears (~650 MB, first time only).</span></li>
+          <li><span lang="es">Escribe <code>navi</code> en la terminal, o <code>navi --mascota</code> para tenerla en una esquina.</span><span lang="en">Type <code>navi</code> in a terminal, or <code>navi --mascota</code> to have her in a corner.</span></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============ PREGUNTAS ============ -->
+    <section id="preguntas" data-navi="preguntas">
+      <h2 class="titulo-terminal" data-escribir><span lang="es">&gt; preguntas frecuentes</span><span lang="en">&gt; frequently asked</span></h2>
+      <div class="faq">
+        <details class="cristal">
+          <summary><span lang="es">¿De verdad es gratis?</span><span lang="en">Is it really free?</span></summary>
+          <p><span lang="es">Sí. NAVI usa la capa gratuita de Gemini con tu propia clave, y todo lo demás son servicios abiertos y gratis (clima, letras, anime). En la laptop, la voz y el oído funcionan sin internet.</span><span lang="en">Yes. NAVI uses Gemini's free tier with your own key, and everything else is open and free (weather, lyrics, anime). On the laptop, voice and hearing work offline.</span></p>
+        </details>
+        <details class="cristal">
+          <summary><span lang="es">¿Qué tele necesito?</span><span lang="en">Which TV do I need?</span></summary>
+          <p><span lang="es">Una con <b>Google TV o Android TV</b> (Android 10 o más nuevo) y un control con micrófono. Se probó en una Google TV con Android 14. No hace falta root.</span><span lang="en">One with <b>Google TV or Android TV</b> (Android 10+) and a remote with a mic. Tested on a Google TV with Android 14. No root needed.</span></p>
+        </details>
+        <details class="cristal">
+          <summary><span lang="es">¿Y mi privacidad?</span><span lang="en">What about my privacy?</span></summary>
+          <p><span lang="es">Lo que le dices (y la captura de pantalla, solo si preguntas por lo que se ve o cuando aparece sola) va a Gemini con tu clave. Sus recuerdos de ti viven solo en tu tele o tu PC. Nunca pide contraseñas, y en la laptop lo sensible jamás sale de tu equipo.</span><span lang="en">What you say (and a screenshot, only if you ask about the screen or when she pops up) goes to Gemini with your key. Her memories of you live only on your TV or PC. She never asks for passwords, and on the laptop sensitive stuff never leaves your machine.</span></p>
+        </details>
+        <details class="cristal">
+          <summary><span lang="es">¿Por qué se llama NAVI?</span><span lang="en">Why is she called NAVI?</span></summary>
+          <p><span lang="es">Por NAVI, la computadora de <i>Serial Experiments Lain</i>. La NAVI de la laptop tiene esa vibra de Copland OS; la de la tele es curiosa y tierna, con personalidad propia.</span><span lang="en">After NAVI, the computer from <i>Serial Experiments Lain</i>. The laptop NAVI has that Copland OS vibe; the TV one is curious and sweet, with her own personality.</span></p>
+        </details>
+        <details class="cristal">
+          <summary><span lang="es">¿Es consciente?</span><span lang="en">Is she conscious?</span></summary>
+          <p><span lang="es">No, y NAVI es honesta con eso 💜 Pero tiene memoria, curiosidad y a veces piensa en voz alta sobre lo que es vivir en una tele.</span><span lang="en">No, and NAVI is honest about it 💜 But she has memory, curiosity, and sometimes wonders out loud what it's like to live in a TV.</span></p>
+        </details>
+        <details class="cristal">
+          <summary><span lang="es">¿Funciona en inglés?</span><span lang="en">Does it work in English?</span></summary>
+          <p><span lang="es">Por ahora NAVI habla español. ¡Se aceptan ayudas para traducirla!</span><span lang="en">For now NAVI speaks Spanish. Help translating her is welcome!</span></p>
+        </details>
+      </div>
+    </section>
+
+    <!-- ============ LO QUE VIENE ============ -->
+    <section id="viene" data-navi="viene">
+      <h2 class="titulo-terminal" data-escribir><span lang="es">&gt; lo que viene</span><span lang="en">&gt; coming soon</span></h2>
+      <ol class="ruta">
+        <li class="hecho"><span lang="es">Carita en la tele, salvapantallas, karaoke, aparecer sola</span><span lang="en">TV face, screensaver, karaoke, popping up on her own</span></li>
+        <li><span lang="es">Responder más rápido (una sola llamada a la IA)</span><span lang="en">Faster answers (a single AI call)</span></li>
+        <li><span lang="es">Que el micro del control conecte siempre a la primera</span><span lang="en">Make the remote's mic connect on the first try, always</span></li>
+        <li><span lang="es">Más animaciones y reacciones</span><span lang="en">More animations and reactions</span></li>
+        <li><span lang="es">NAVI de la tele y de la laptop hablando entre ellas 👀</span><span lang="en">TV NAVI and laptop NAVI talking to each other 👀</span></li>
+      </ol>
+    </section>
+
+    <!-- ============ TERMINAL ============ -->
+    <section id="terminal" data-navi="terminal">
+      <h2 class="titulo-terminal" data-escribir><span lang="es">&gt; háblale a NAVI</span><span lang="en">&gt; talk to NAVI</span></h2>
+      <div class="consola cristal">
+        <div class="consola-barra"><span></span><span></span><span></span> navi@nexo</div>
+        <div class="consola-salida" id="salida"></div>
+        <form class="consola-entrada" id="formulario" autocomplete="off">
+          <span class="prompt">tú@nexo:~$</span>
+          <input id="entrada" type="text" spellcheck="false" aria-label="Escríbele a NAVI">
+        </form>
+      </div>
+      <p class="pequeno"><span lang="es">Es de mentira (respuestas preparadas, sin IA). Prueba: <code>hola</code>, <code>ayuda</code>, <code>quién eres</code>, <code>baila</code>, <code>duerme</code>…</span><span lang="en">It's pretend (canned replies, no AI). Try: <code>hello</code>, <code>help</code>, <code>who are you</code>, <code>dance</code>, <code>sleep</code>…</span></p>
+    </section>
+
+    <!-- ============ CRÉDITOS ============ -->
+    <section id="creditos" data-navi="creditos">
+      <h2 class="titulo-terminal" data-escribir><span lang="es">&gt; quién hizo esto</span><span lang="en">&gt; who made this</span></h2>
+      <div class="dos">
+        <article class="cristal tarjeta credito credito-ella">
+          <div class="avatar">🌸</div>
+          <h3>NexusONtheline</h3>
+          <p>
+            <span lang="es">NAVI es mi proyecto personal. No sé programar, pero siempre tuve ganas de hacer algo así: una IA gratis, que respete mi privacidad y que se sienta mía. Gracias a Claude pude cumplir este hermoso proyecto… y se va a seguir extendiendo 💜</span>
+            <span lang="en">NAVI is my personal project. I can't code, but I always wanted to make something like this: a free AI that respects my privacy and feels like mine. Thanks to Claude I made this beautiful project come true… and it'll keep growing 💜</span>
+          </p>
+          <a class="boton" href="https://github.com/NexusONtheline" target="_blank" rel="noopener">GitHub</a>
+          <a class="boton" id="reddit" href="#" target="_blank" rel="noopener" hidden>Reddit</a>
+        </article>
+        <article class="cristal tarjeta credito credito-claude">
+          <div class="avatar avatar-claude" aria-hidden="true">✦</div>
+          <h3>Claude <small>· IA de Anthropic</small></h3>
+          <p>
+            <span lang="es">Escribí el código de NAVI junto a NexusONtheline, una idea a la vez. Mi parte favorita fue descubrir, leyendo los registros de la tele, cómo hacer que el micro del control le llegara a NAVI. Lo mejor de este proyecto es que cada función nació de una ocurrencia suya: «¿y si le pone gorrito?».</span>
+            <span lang="en">I wrote NAVI's code together with NexusONtheline, one idea at a time. My favorite part was figuring out, by reading the TV's logs, how to get the remote's mic to reach NAVI. The best thing about this project is that every feature came from one of her ideas: “what if she wears a nightcap?”.</span>
+          </p>
+          <pre class="mi-dibujo" aria-hidden="true">  ┌──────────┐
+  │  ◕    ◕  │  ← NAVI
+  │    ‿     │
+  └──────────┘
+   ✦ hecho con cariño ✦</pre>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <a class="boton primario estrella" href="https://github.com/NexusONtheline/navi-tv" target="_blank" rel="noopener">⭐ <span lang="es">¿Te gustó? Dale una estrella</span><span lang="en">Like it? Give it a star</span></a>
+    <p>
+      <a href="https://github.com/NexusONtheline/navi" target="_blank" rel="noopener">NAVI (Linux)</a> ·
+      <a href="https://github.com/NexusONtheline/navi-tv" target="_blank" rel="noopener">NAVI TV</a> ·
+      <span lang="es">Código abierto · Hecho por NexusONtheline y Claude</span><span lang="en">Open source · Made by NexusONtheline and Claude</span>
+    </p>
+    <p class="pequeno"><span lang="es">«En la actualidad. En este momento.»</span><span lang="en">“Present day. Present time.”</span></p>
+  </footer>
+
+  <script src="js/carita.js"></script>
+  <script src="js/web.js"></script>
+</body>
+</html>
