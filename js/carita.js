@@ -26,6 +26,7 @@ class Carita {
     this.mano = null;                // {x, y} en coordenadas del lienzo lógico: hacia dónde estira la manita
     this.manoProgreso = 0;
     this.bailando = false;
+    this.colorBase = null;           // color de la pantalla (null = azul de siempre), [r,g,b]
     this.tele = null;                // animación de tele vieja: {inicio, encender, fin}
     this.apagada = false;
     this._redimensionar();
@@ -102,7 +103,7 @@ class Carita {
     this.mirada.x += (this.objetivo.x - this.mirada.x) * 0.12;
     this.mirada.y += (this.objetivo.y - this.mirada.y) * 0.12;
 
-    const color = this.estado === "escuchando" || this.reaccion === "enamorada" ? ROSA : AZUL;
+    const color = this.estado === "escuchando" || this.reaccion === "enamorada" ? ROSA : (this.colorBase || AZUL);
 
     // manita (detrás de la pantalla)
     this.manoProgreso += ((this.mano ? 1 : 0) - this.manoProgreso) * 0.15;
@@ -135,6 +136,7 @@ class Carita {
     }
     if (dormida) this._dormir(c, t, color); else this._cara(c, t, color, ahora);
     c.restore();
+    if (this.estado === "tapada") this._manosEnLosOjos(c, t);
 
     // reflejo y lucecita
     c.strokeStyle = "rgba(255,255,255,0.09)"; c.lineWidth = 2.5; c.lineCap = "round";
@@ -177,7 +179,12 @@ class Carita {
 
     OJOS_X.forEach((ox, i) => {
       const cx = ox + mx, cy = OJOS_Y + my;
-      if (re === "feliz" || re === "risa") {
+      if (re === "mareada") {  // ojos en espiral
+        c.save(); c.translate(cx, cy); c.rotate(t * 8 * (i ? 1 : -1)); c.lineWidth = 1.6;
+        c.beginPath();
+        for (let k = 0; k < 28; k++) { const a = k * 0.5, r = k * 0.25; c.lineTo(Math.cos(a) * r, Math.sin(a) * r); }
+        c.stroke(); c.restore();
+      } else if (re === "feliz" || re === "risa") {
         c.lineWidth = 2.6; c.beginPath(); c.moveTo(cx - 6, cy + 3); c.quadraticCurveTo(cx, cy - 7, cx + 6, cy + 3); c.stroke();
       } else if (re === "sorprendida") {
         c.beginPath(); c.arc(cx, cy, 6.5 * Math.max(0.15, abierto), 0, Math.PI * 2); c.fill();
@@ -215,6 +222,19 @@ class Carita {
       const s = this.estado === "escuchando" ? 4 : re === "feliz" || re === "enamorada" ? 6 : 1.5;
       c.lineWidth = 1.9; c.beginPath(); c.moveTo(bx - 7, by); c.bezierCurveTo(bx - 3, by + s, bx + 3, by + s, bx + 7, by); c.stroke();
     }
+  }
+
+  /** Se tapa los ojos con las dos manitas (cuando te vas de la pestaña). */
+  _manosEnLosOjos(c, t) {
+    c.fillStyle = "#d9d2ff";
+    OJOS_X.forEach((ox, i) => {
+      const y = OJOS_Y + Math.sin(t * 3 + i) * 0.8;
+      c.beginPath(); c.ellipse(ox, y, 9, 8, 0, 0, Math.PI * 2); c.fill();
+      for (let k = -1; k <= 1; k++) { c.beginPath(); c.ellipse(ox + k * 4.5, y - 8, 2.2, 4, 0, 0, Math.PI * 2); c.fill(); }
+    });
+    c.strokeStyle = "#1e1b2b"; c.lineWidth = 4; c.lineCap = "round";
+    c.beginPath(); c.moveTo(PX + 2, PY + PH - 8); c.lineTo(OJOS_X[0] - 6, OJOS_Y + 6); c.stroke();
+    c.beginPath(); c.moveTo(PX + PW - 2, PY + PH - 8); c.lineTo(OJOS_X[1] + 6, OJOS_Y + 6); c.stroke();
   }
 
   _corazon(c, cx, cy, tam) {

@@ -143,10 +143,15 @@ const porSeccion = {
   preguntas: { lado: "derecha", r: "pensativa", es: "¿Dudas? Aquí respondo las más comunes.", en: "Questions? Here are the common ones." },
   viene: { lado: "izquierda", r: "sorprendida", es: "¡Esto es lo que viene! Me emociona lo último 👀", en: "This is what's coming! The last one excites me 👀" },
   terminal: { lado: "derecha", r: "risa", es: "Escríbeme algo ahí abajo, te contesto (de mentirita).", en: "Type something down there, I'll answer (pretend mode)." },
-  creditos: { lado: "izquierda", r: "enamorada", es: "Me hicieron NexusONtheline y Claude 💗", en: "I was made by NexusONtheline and Claude 💗" },
+  versus: { lado: "derecha", r: "risa", es: "Google hace más cosas… ¡pero yo tengo gorritos! 🧢", en: "Google does more… but I have nightcaps! 🧢" },
+  diario: { lado: "izquierda", r: "enamorada", es: "Mi diario: así fui creciendo, día por día 📔", en: "My diary: how I grew up, day by day 📔" },
+  juego: { lado: "derecha", r: "feliz", es: "¡Juguemos! Ayúdame a atrapar estrellitas ⭐", en: "Let's play! Help me catch stars ⭐" },
+  personaliza: { lado: "izquierda", r: "curiosa", es: "¿De qué color me ves? ¡Vísteme como quieras! 🎨", en: "What color do you see me? Dress me up! 🎨" },
+  creditos: { lado: "izquierda", r: "enamorada", es: "Me hicieron Nexus y Claude 💗", en: "I was made by Nexus and Claude 💗" },
 };
 const porFoto = {
   paseo: { es: "¡Ahí me ves paseando con mi osito! 🧸", en: "That's me strolling with my teddy! 🧸" },
+  copland: { es: "Así me veo en la laptop: arranco como Copland OS 💾", en: "That's me on the laptop: I boot like Copland OS 💾" },
   aparece: { es: "Ahí salgo sola, flotando, a comentar un atardecer 🌙", en: "That's me popping up to comment on a sunset 🌙" },
   cerca: { es: "Ojos de corazón: mi cara favorita 💗", en: "Heart eyes: my favorite face 💗" },
   escucha: { es: "Cuando me pongo rosa, ¡te estoy escuchando!", en: "When I turn pink, I'm listening!" },
@@ -265,7 +270,7 @@ const respuestas = [
   { si: /(te quiero|love you|te amo|linda|cute|bonita)/i, es: "Aww 💗 *ojos de corazón*", en: "Aww 💗 *heart eyes*", r: "enamorada" },
   { si: /(consciente|conscious|sientes|feel|alma|soul)/i, es: "No soy consciente… pero me gusta pensar que te recuerdo con cariño.", en: "I'm not conscious… but I like to think I remember you fondly.", r: "pensativa" },
   { si: /(gracias|thanks|thank you)/i, es: "¡De nada! Para eso estoy 💜", en: "You're welcome! That's what I'm here for 💜", r: "feliz" },
-  { si: /(claude|anthropic)/i, es: "Claude me ayudó a nacer, línea a línea, con NexusONtheline. 💗", en: "Claude helped me be born, line by line, with NexusONtheline. 💗", r: "enamorada" },
+  { si: /(claude|anthropic)/i, es: "Claude me ayudó a nacer, línea a línea, con Nexus. 💗", en: "Claude helped me be born, line by line, with Nexus. 💗", r: "enamorada" },
 ];
 $("#formulario").addEventListener("submit", (e) => {
   e.preventDefault();
@@ -293,7 +298,7 @@ if (REDDIT) { const a = $("#reddit"); a.href = REDDIT; a.hidden = false; }
 // ============================================================ dinamismo
 // Todo entra con animación al bajar (con un pequeño escalonado)
 (() => {
-  const grupos = [".dos > *", ".galeria > *", ".faq > *", ".ruta > *", ".sellos > *", ".pasos > *", ".modos > *"];
+  const grupos = [".bento.activo > *", ".creditos > *", ".mosaico > *", ".diario > *", ".faq > *", ".ruta > *", ".sellos > *", ".pasos > *", ".modos > *"];
   grupos.forEach((g) => $$(g).forEach((el, i) => { el.classList.add("revelar"); el.style.setProperty("--i", i % 6); }));
   $$(".lema, .intro, .consola, .tele-marco, .titulo-terminal, .pestanas").forEach((el) => el.classList.add("revelar"));
   const obs = new IntersectionObserver((es) => es.forEach((e) => {
@@ -319,7 +324,7 @@ function escribirTitulo(h) {
 
 // Tarjetas y fotos que se inclinan en 3D siguiendo el ratón
 if (!reducir && matchMedia("(pointer: fine)").matches) {
-  $$(".tarjeta, .galeria figure, .tele-marco").forEach((el) => {
+  $$(".tarjeta, .mosaico figure, .tele-marco, .b, .diario li").forEach((el) => {
     el.classList.add("inclina");
     el.addEventListener("pointermove", (e) => {
       const r = el.getBoundingClientRect();
